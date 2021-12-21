@@ -1,0 +1,13 @@
+pip install PyQt5
+pip install QScintilla
+pip install parso==0.8.2
+pip install jedi==0.18.0
+#pip install parso==0.7.1
+#pip install jedi==0.16.0
+pip install pyserial
+pip install requests
+pip install pandas
+pip install pillow
+pip install opencv_python-4.5.2-cp37-cp37m-win32.whl		#from wheel search internet
+pip install pip install opencv-contrib-python
+pip install tensorflow==2.0					#if 64bit system
