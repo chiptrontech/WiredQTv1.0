@@ -5,7 +5,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
-Rapid Application Development (RAD) Tools for Python GUI Development is a reliable python powered program that will give its user advantage in machine learning, Iot systems, embedded systems, and many more!
+Rapid Application Development (RAD) Tools for Python GUI Development is a reliable python powered program that will give its user advantage in machine learning, IoT systems, embedded systems, and many more!
 
 - Create your own system
 - Make some scripts
@@ -15,7 +15,7 @@ Rapid Application Development (RAD) Tools for Python GUI Development is a reliab
 
 {Under Constrction}
 
-## Installation
+## Windows Installation
 
 1. RAD Tools for Python GUI Development requires Python3.7 to run and uses a number of python 3.7 dependencies to work properly:
 
