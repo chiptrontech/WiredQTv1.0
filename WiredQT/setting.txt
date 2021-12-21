@@ -1,0 +1,17 @@
+{
+"QPushButton":{"Width":80,"Height":40},
+"QCheckBox":{"Width":100,"Height":30},
+"QProgressBar":{"Width":100,"Height":20},
+"QSlider":{"Width":100,"Height":20},
+"QRadioButton":{"Width":100,"Height":20},
+"QLabel":{"Width":100,"Height":30},
+"QTextEdit":{"Width":100,"Height":30},
+"QTimeEdit":{"Width":100,"Height":25},
+"QSpinBox":{"Width":100,"Height":30},
+"QSlider":{"Width":100,"Height":30},
+"QMessageBox":{"Width":200,"Height":100},
+"QLineEdit":{"Width":100,"Height":30},
+"QInputDialog":{"Width":180,"Height":100},
+"QAbstractSpinBox":{"Width":100,"Height":30},
+"QColorDialog":{"Width":300,"Height":200},
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Product Page Template</title>
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap-4.3.1.css" rel="stylesheet">
+  </head>
+  <script src="static/wta_js/parsedata.js"></script> 	
+  <body>
+
+	  
+    <hr>
+    <footer class="text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <p>Copyright © MyWebsite. All rights reserved.</p>
+          </div>
+        </div>
+		<div class="row">
+          <div class="col-md-4">
+            <p id="mydemo">Table</p>
+          </div>
+		  <div class="col-md-4">
+            <p>Jinja Data = {{data}}</p>
+          </div>
+		  <div class="col-md-4">
+			<form>
+				<div class="form-group">
+					<label for="formGroupExampleInput">Example label</label>
+					<input type="text" class="form-control" id="user_input" placeholder="Example input" value="Donna"></input>
+				</div>
+				
+				<BR>
+				<button type="button" class="btn btn-success" onclick="mytableendpoint('mydemo','Datagrid2',{userName:document.getElementById('user_input').value,age:12})">Datagrid Fix</button>	
+				<!--<input type="button" onclick="mytable('demo')" value="Datagrid Fix">-->	
+				<BR>
+				<input type="button" onclick="mytableendpoint('mydemo','Datagrid',{userName:document.getElementById('user_input').value,age:12})" value="Datagrid from flask">		
+				<BR>
+				<input type="button" onclick="mylinechartendpoint('demox','LineChart',{userName:document.getElementById('user_input').value,title:'sin-cos Graph'})" value="LineChart">
+				<BR>
+				<input type="button" onclick="mybarchartendpoint('demob','BarChart',{userName:document.getElementById('user_input').value,age:12})" value="BarChart">	
+			</form>  
+            <p id="demo" onclick="ajaxtemp()">Click me to change my HTML content (innerHTML).</p>
+			  
+          </div>
+		
+      </div>
+		<div class="row">
+          <div class="col-md-4">
+            <p id="mydemo">Table</p>
+          </div>
+		  <div class="col-md-4">
+            <p id="demob">Table</p>
+          </div>			
+		  <div class="col-md-4">
+            <p id="demox" style="width: 600px; height: 400px">Table</p>
+		  </div> 
+			
+        </div>		
+    </footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+       <script src="static/js/jquery-3.3.1.min.js"></script>
+       <!-- Include all compiled plugins (below), or include individual files as needed -->
+       <script src="static/js/popper.min.js"></script>
+       <script src="static/js/bootstrap-4.3.1.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['table']}); 
+		google.charts.load('current', {'packages':['corechart']});
+	</script>	
+		
+	<script>
+		/*load*/
+		mytableendpoint('mydemo','Datagrid',{userName:'Donna'})
+		/*load*/
+		
+		function ajaxtemp()
+		{
+			x=inputDictionary()
+			x['userName']='Donna';//add some data
+			    $.ajax({
+				  url: "Temperature",
+				  type: "post",
+				  data: x,
+				  success: function(response) {
+					if (response['userName']!="")
+					{
+						document.getElementById("demo").innerHTML = response['temp'];
+					}
+					else
+					{
+						alert("invalid user/password!!!");
+					}
+				  },
+				  error: function(xhr) {
+					//Do Something to handle error
+					console.log("what a mess");
+				  }
+				});
+		}
+		function myFunction()
+		{
+			window.location.href = "/register";
+		}
+		function Encript(str)
+		{
+			return btoa(str);
+		}
+		function Decript(str)
+		{
+			
+			return atob(str);
+		}
+	</script>
+  </body>
+</html>

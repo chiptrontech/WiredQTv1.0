@@ -1,0 +1,4 @@
+{
+"QPushButton":{"setter":"text()","getter":setText(),"type","str"},
+"QLCDNumber":{"setter":"display()","getter":value(),"type","float"},
+}

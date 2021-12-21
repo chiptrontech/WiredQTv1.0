@@ -1,0 +1,51 @@
+category
+	Name
+		varchar(255)
+		UNIQUE
+items
+	ID
+		varchar(255)
+		UNIQUE
+		NOTNULL
+		REQUIRED
+		AUTONUMBER
+		NUMBER
+		RANGE
+			1.0:10000.0
+	Name
+		varchar(255)
+		RETRIBTABLE
+			products
+				Name
+	Category
+		varchar(255)
+		NOTNULL
+		RETRIBTABLE
+			category
+				Name
+	Price
+		varchar(255)
+products
+	ID
+		varchar(255)
+		AUTONUMBER
+	Name
+		varchar(255)
+		REQUIRED
+supplier
+	Products_ID
+		varchar(255)
+		RETRIBTABLE
+			products
+				ID,Name,-
+	Name
+		varchar(255)
+		REQUIRED
+		UNIQUE
+	Tel
+		varchar(255)
+		REQUIRED
+	QTY
+		varchar(255)
+		REQUIRED
+		INTEGER
