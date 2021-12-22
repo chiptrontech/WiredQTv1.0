@@ -70,7 +70,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				return target,_x-x-1
 			return "",-1
 			
-		print("jedi thingking")
+		print("jedi thinking")
 		sys_path =jedi.get_default_environment().get_sys_path()
 		if jedi.__version__!="0.18.0":
 			script=jedi.Script(source=code,sys_path=sys_path+ [path] )
@@ -96,7 +96,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 							if str(modulename)!="" and modulenotinfolder==True:#add only if module not in project directory eg numpy etc
 								
 								jedimodule.update({modulename.module_name:lst})
-								SaveFileStr("intelisense.txt", str(jedimodule))
+								SaveFileStr("intellisense.txt", str(jedimodule))
 								pass							
 						except:
 							pass
