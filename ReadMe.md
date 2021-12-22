@@ -12,9 +12,34 @@ Rapid Application Development (RAD) Tools for Python GUI Development is a reliab
 
 ## Getting Started
 
-{Under Constrction}
+### What is WiredQt?
 
-## Windows Installation
+It is a compact Rapid Application Development Software designed to make system automation and prototypes in minutes - removing the need to worry about some software subscription.
+
+### Features
+
+You need machine learning using Tensorflow 2.0? We got you covered.
+
+No MatLab? No problem.
+
+   #### Version 1.00
+In this version, you will be able to access the ff. (list may be incomplete);
+
+- GIF animation
+- Flask web framework
+- DataGrid
+- WebSocket
+- Keypad
+- Liquid crystal
+- Serial Port
+- Multiple tabulated windows
+- Transmission Control Protocol for both Client and Server
+- MatPlotLib
+- Machine Learning using Tensorflow 2.0, see image below
+
+![wiredqtmachinelearning](https://github.com/chiptrontech/WiredQTv1.0/blob/207969ef59d45190ccaa24c439b96928bd1058d0/WiredQT%20Machine%20Learning.png "This is just a sample of what you can do using our app.")
+
+### Windows Installation
 
 1. RAD Tools for Python GUI Development requires Python3.7 to run and uses a number of python 3.7 dependencies to work properly:
 
@@ -32,8 +57,6 @@ Rapid Application Development (RAD) Tools for Python GUI Development is a reliab
         pip install pip install opencv-contrib-python
         pip install tensorflow==2.0					#if 64bit system
         
-      ***Make sure that Python37 is in the same directory as your WiredQT folder.***
-
 2. Compressed and download the whole WiredQt folder.
 3. Extract only the WiredQt folder to your root directory, like so
     
@@ -46,7 +69,7 @@ Rapid Application Development (RAD) Tools for Python GUI Development is a reliab
         
 5. And, you're good to go! Yay!
 
-
+      > Note: Make sure that Python37 is in the same directory as your WiredQT folder.
       ***For ease of use, you may download Python37 with added dependencies on this google drive link: https://drive.google.com/file/d/1-QKWjbWvoe6L4I3DzGOqu-0Z-jjApl0V/view?usp=sharing***
 
 
