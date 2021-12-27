@@ -24,8 +24,8 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		self.PutICON()
 		self.jedi=jedi
 		self.jedimodule={}
-		if FileExist("intelisense.txt"):
-			strs=GetFileStr("intelisense.txt")
+		if FileExist("intellisense.txt"):
+			strs=GetFileStr("intellisense.txt")
 			self.jedimodule=eval(strs)
 		a=0	
 	def _showhelp(self,code,word,x,y,wordline,jedimodule,path=""):
