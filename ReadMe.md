@@ -56,7 +56,9 @@ In this version, you will be able to access the ff. (list may be incomplete);
         pip install opencv_python-4.5.2-cp37-cp37m-win32.whl		#from wheel search internet
         pip install pip install opencv-contrib-python
         pip install tensorflow==2.0					#if 64bit system
-        
+
+![wiredqtcompileride](ide.png " ")
+
 2. Compressed and download the whole WiredQt folder.
 3. Extract only the WiredQt folder to your root directory, like so
     
