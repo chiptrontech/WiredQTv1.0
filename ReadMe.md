@@ -59,7 +59,7 @@ In this version, you will be able to access the ff. (list may be incomplete);
 
 ![wiredqtcompileride](ide.png " ")
 
-2. Compressed and download the whole WiredQt folder.
+2. Compress and download the whole WiredQt folder.
 3. Extract only the WiredQt folder to your root directory, like so
     
         C:\WiredQt
