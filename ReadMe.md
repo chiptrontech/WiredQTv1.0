@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Rapid Application Development (RAD) Tools for Python GUI Development is a reliable python powered program that will give its user advantage in machine learning, IoT systems, embedded systems, and many more!
+WiredQT is a Rapid Application Development (RAD) Tool for Python GUI Development is a reliable python powered program that will give its user advantage in machine learning, IoT systems, embedded systems, and many more!
 
 - Create your own system
 - Make some scripts
@@ -72,8 +72,11 @@ In this version, you will be able to access the ff. (list may be incomplete);
 5. And, you're good to go! Yay!
 
       > Note: Make sure that Python37 is in the same directory as your WiredQT folder.
-      ***For ease of use, you may download Python37 with added dependencies on this google drive link: https://drive.google.com/file/d/1-QKWjbWvoe6L4I3DzGOqu-0Z-jjApl0V/view?usp=sharing***
+      ***For ease of use, you may download Python37 with added dependencies on this google drive link: [Python37 Google Drive](https://drive.google.com/file/d/1-QKWjbWvoe6L4I3DzGOqu-0Z-jjApl0V/view?usp=sharing)***
 
+## Error Reporting
+
+If you found some bugs (which there might be some) you can write in complete detail the bugs you've found in [issues](https://github.com/chiptrontech/WiredQTv1.0/issues/new). Bugs found must be reproducible, and by providing us how to reproduce the issue will only get the bugs you've found fixed.
 
 ## Development
 
