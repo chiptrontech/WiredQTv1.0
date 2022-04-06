@@ -421,10 +421,11 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		strs=show_training_index.generate(x)
 		SaveFileStr( self.projectpath+"/show_training_index.py",strs)	
 
-		strs='''1.Create folder "Colab Notebooks" in your Google Drive/My Drive and paste training_dataset.ipynb
+		strs='''
+1.Create folder "Colab Notebooks" in your Google Drive/My Drive and paste training_dataset.ipynb
 2.Run training_dataset.ipynb in Colaboratory(line by line)
 
-3.after executing #line 9 copy listed files and folder below from object_detection folder 
+3.after executing #line 10 copy the following files and folder below from object_detection folder 
 to google drive "/My Drive/Colab Notebooks/models/research/object_detection" 
 
 a.show_training_index.py
@@ -434,7 +435,7 @@ d.test.record
 e.training(folder)
 f.inference_graph(folder)
 
-4.after executing #line 15 it will advice what to execute on #line 16
+4.after executing #line 16 it will advice what to execute on #line 17
 
 '''
 
