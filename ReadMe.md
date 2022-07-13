@@ -72,7 +72,7 @@ In this version, you will be able to access the ff. (list may be incomplete);
 5. And, you're good to go! Yay!
 
       > Note: Make sure that Python37 is in the same directory as your WiredQT folder.
-      ***For ease of use, you may download Python37 with added dependencies on this google drive link: [Python37 Google Drive](https://drive.google.com/file/d/1-QKWjbWvoe6L4I3DzGOqu-0Z-jjApl0V/view?usp=sharing)***
+      ***For ease of use, you may download Python37 with added dependencies on this google drive link: [Python37 Google Drive](https://drive.google.com/file/d/1YYt3SEAF2nn1srazVLEnrDAO_STH2yiH/view?usp=sharing)***
 
 ## Error Reporting
 
