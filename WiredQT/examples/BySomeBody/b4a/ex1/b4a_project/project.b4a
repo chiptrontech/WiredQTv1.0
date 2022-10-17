@@ -1,0 +1,123 @@
+﻿Build1=Default,b4a.OPTUMizerPatient
+File1=Layout1.bal
+FileGroup1=Default Group
+Group=Default Group
+Library1=core
+Library10=httputils2
+Library11=json
+Library12=reflection
+Library2=stringutils
+Library3=phone
+Library4=serial
+Library5=randomaccessfile
+Library6=network
+Library7=gps
+Library8=xui
+Library9=runtimepermissions
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="28"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~SetApplicationAttribute(android:theme, "@style/LightTheme")~\n~CreateResource(values, colors.xml,~\n~<resources>~\n~    <color name="actionbar">#ff039be5</color>~\n~	<color name="statusbar">#ff006db3</color>~\n~	<color name="textColorPrimary">#ffffffff</color>~\n~	<color name="navigationBar">#ff006db3</color>~\n~</resources>~\n~)~\n~CreateResource(values-v20, theme.xml,~\n~<resources>~\n~    <style name="LightTheme" parent="@android:style/Theme.Material.Light">~\n~		 <item name="android:colorPrimary">@color/actionbar</item>~\n~		 <item name="android:colorPrimaryDark">@color/statusbar</item>~\n~		 <item name="android:textColorPrimary">@color/textColorPrimary</item>~\n~		 <item name="android:navigationBarColor">@color/navigationBar</item>~\n~    </style>~\n~</resources>~\n~)~\n~CreateResource(values-v14, theme.xml,~\n~<resources>~\n~    <style name="LightTheme" parent="@android:style/Theme.Holo.Light">~\n~		<item name="android:actionBarStyle">@style/CustomActionBarStyle</item>~\n~    </style>~\n~	<style name="CustomActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">~\n~	    <item name="android:background">@color/actionbar</item>~\n~	</style>~\n~</resources>~\n~)~\n~~\n~
+Module1=clsParser
+Module2=frmmain
+Module3=Starter
+Module4=Table
+Module5=vb6
+Module6=WTAServer
+NumberOfFiles=1
+NumberOfLibraries=12
+NumberOfModules=6
+Version=9.801
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Keyless Motor
+	#VersionCode: 1
+	#VersionName: 
+	#SupportedOrientations: portrait
+	#CanInstallToExternalStorage: False
+#End Region
+#Region  Activity Attributes 
+	#FullScreen: True
+	#IncludeTitle: False
+	
+#End Region
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Private xui As XUI
+End Sub
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+	'Private bluetooth1 As bluetooth
+	'Private frmusercontrol1 As frmusercontrol
+	'Private frmsplash1 As frmsplash
+	'Private frmcontrols1 As frmcontrols
+	'Private frmpatient1 As frmpatient'''
+	Private frmmain1 As frmmain                 '1
+	' PMedication1 As PMedication       '9
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	'Do not forget to load the layout file created with the visual designer. For example:
+	If FirstTime=True Then
+		
+		Activity.LoadLayout("Layout1")
+		'Activity.AddMenuItem3("", "refresh", xui.LoadBitmapResize(File.DirAssets, "ic_cached_white_24dp.png", 32dip, 32dip, True), True)
+		'Activity.AddMenuItem3("", "done", xui.LoadBitmapResize(File.DirAssets, "ic_done_white_24dp.png", 32dip, 32dip, True), True)
+		'Activity.AddMenuItem3("", "blue", xui.LoadBitmapResize(File.DirAssets, "bt.png", 32dip, 32dip, True), True)
+		Activity.Title=""
+		'bluetooth1.SetLayout(0,0,100%x,100%y)
+		'frmcontrols1.SetLayout(0,0,100%x,100%y)
+		'bluetooth1.Visible=False
+		'frmcontrols1.Visible=False
+		'frmsplash1.SetLayout(0,0,100%x,100%y)
+		'frmsplash1.Visible=False
+		'frmpatient1.SetLayout(0,0,100%x,100%y)'''
+		'frmpatient1.Visible=True'''
+		frmmain1.SetLayout(0,0,100%x,100%y)        '1
+		frmmain1.Visible=True
+
+		
+		Dim rp As RuntimePermissions
+		
+		Dim FilePath As String
+		If File.ExternalWritable Then Starter.FilePath = rp.GetSafeDirDefaultExternal("") Else Starter.FilePath = File.DirInternal
+   
+		
+'		If File.Exists(Starter.FilePath,"data.txt") Then
+'			Dim strs=vb6.GetFileStr("data.txt")
+'			Dim deyt As EditUser
+'			deyt=EditUser1
+'			Dim a() As Object
+'			a=vb6.Split(strs,CRLF)
+'			Dim b As Int
+'			For b =0 To a.Length-1
+'				'deyt.lblEmail.AddSingleLine(a(b))				'listBike.AddSingleLine(a(b))
+'			Next
+'		End If
+	End If
+End Sub
+Sub refresh_click()
+	'frmsplash1.Visible=False
+	'frmcontrols1.Visible=True
+End Sub
+Sub done_click()
+	'frmsplash1.Visible=True
+	'frmcontrols1.Visible=False
+End Sub
+Sub Activity_Resume
+	'ToastMessageShow("resume",False)
+	'Starter.frmcontrols1=frmcontrols1
+	'Starter.bluetoothview1=bluetooth1
+	'Starter.frmsplash1=frmsplash1
+	'Starter.frmpatient1=frmpatient1'''
+	Starter.frmmain1=frmmain1              '1
+	Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_WRITE_EXTERNAL_STORAGE)
+	Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+	'ToastMessageShow("pause : " & UserClosed,False)
+	If UserClosed=True Then
+		ExitApplication
+	End If
+End Sub
+

@@ -1,2 +1,2 @@
-path=G:\python37-32
+path=c:\python37
 python DBbuilder.py

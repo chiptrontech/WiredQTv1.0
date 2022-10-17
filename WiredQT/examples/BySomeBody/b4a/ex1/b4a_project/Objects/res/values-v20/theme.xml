@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LightTheme" parent="@android:style/Theme.Material.Light">
+		 <item name="android:colorPrimary">@color/actionbar</item>
+		 <item name="android:colorPrimaryDark">@color/statusbar</item>
+		 <item name="android:textColorPrimary">@color/textColorPrimary</item>
+		 <item name="android:navigationBarColor">@color/navigationBar</item>
+    </style>
+</resources>

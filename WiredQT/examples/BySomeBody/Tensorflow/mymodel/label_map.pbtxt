@@ -1,0 +1,15 @@
+item {
+	id: 1
+	name: 'lighter'
+}
+
+item {
+	id: 2
+	name: 'usb'
+}
+
+item {
+	id: 3
+	name: 'pick'
+}
+
