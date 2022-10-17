@@ -240,11 +240,11 @@ class PropertyEditor:
 		self.scrollWidget = QWidget()
 		self.parent=_self
 		forms(self.scrollWidget).Width=_self.thisleft*2
-		forms(self.scrollWidget).Height=768*2
+		forms(self.scrollWidget).Height=DeskTopSize()[1]*2
 
 		scrollArea = QScrollArea()
 		forms(scrollArea).Width=_self.thisleft
-		forms(scrollArea).Height=700-_self.thistop
+		forms(scrollArea).Height=DeskTopSize()[1]-68-_self.thistop
 		scrollArea.setWidgetResizable(True)
 		scrollArea.setWidget(self.scrollWidget)   
 		scrollArea.setParent(_self)
@@ -580,8 +580,9 @@ class pythonCode(object):
 def SquareWidget(parent,l,t,w,h,scroll=False,installEvent=False):
 	scrollWidget = QWidget()
 	if scroll:
-		forms(scrollWidget).Width=1366
-		forms(scrollWidget).Height=768
+		w,h=DeskTopSize()
+		forms(scrollWidget).Width=w
+		forms(scrollWidget).Height=h
 	if installEvent:
 		scrollWidget.setMouseTracking(True)
 		scrollWidget.installEventFilter(parent)
@@ -1053,7 +1054,8 @@ class objectMove:
 class Handler(QtWidgets.QWidget,usercontrol):
 	def __init__(self,*param):    
 		super(Handler, self).__init__(None)
-		initUI(self,param,w=1366,h=768,title="WiredQT v5.0",controlbox=True,startpos=(0,30),timeoutdestroy=-1)
+		w,h=DeskTopSize()
+		initUI(self,param,w=w,h=h,title="WiredQT v5.0",controlbox=True,startpos=(0,30),timeoutdestroy=-1)
 		#self.installEventFilter(self)
 		self.process=None
 		self.runtime="Default"
@@ -1064,7 +1066,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		self.timer.start(10)       
 		self.thisleft=250
 		self.thistop=50
-		self.thiswidth=900
+		self.thiswidth=w-466#900
 		self.sw,self.sa=SquareWidget(self, self.thisleft,self.thistop,self.thiswidth,500,True,True)
 		self.GTKForms()      
 		self.intellisense.setStyleSheet("border:none")	
@@ -1079,7 +1081,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		self.gui=ScrollLayout(self,500,0,200,650)
 		forms(self.gui.scrollArea).Left=forms(self.sa).Left+forms(self.sa).Width
 		forms(self.gui.scrollArea).Top=50
-		self.sch=Scheduler(5000)#500 ms
+		self.sch=Scheduler(1000)#500 ms
 		self.sch.Start()
 
 
@@ -1151,7 +1153,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 
 			self.createwidget(str(_wtaprop), _type, 'usercontrol','[]')
 		t=19
-		_createwidget('QPushButton','Designer',800,t,30,30)
+		_createwidget('QPushButton','Designer',600,t,30,30)
 		self.Designer.obj.clicked.connect(self.designer)
 
 		_createwidget('QPushButton','resume',500,t,30,30)
@@ -1407,10 +1409,15 @@ class Handler(QtWidgets.QWidget,usercontrol):
 							#print("this widget has parent")
 							pass
 						
-					except:
+					except Exception as e:
 						#continue#if debug our own wiredQT
 						QMessageBox.about(self, "Error", "Check " + fname + ", if no errors or required Libraries were installed")
-						QMessageBox.about(self, "Widget warning, ", "self." +param["Name"]+ " will not be included in the design")
+						import traceback
+						strs=""
+						for a in traceback.format_exc().splitlines():
+							strs+=a+"\n"
+						#QMessageBox.about(self, "\nWidget warning, ", "self." +param["Name"]+ " will not be included in the design")
+						QMessageBox.about(self, "\nWidget warning, ", strs+"\n\n"+param["Name"]+".py will not be included in the design")
 						pass
 			self.QSCI.Text=self.code		
 			return False
@@ -1908,14 +1915,18 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				l="100";t="100";w="100";h="100"
 			else:
 				l=prop['Left'];t=prop['Top'];w=prop['Width'];h=prop['Height']
-				
 			try:	
+			#if 1:
 				self._createwidgetActivex(_wtaprop,_type,name+str(len(self.objectMove.lst)),l,t,w,h,"Activex") 
 				sw=self.objectMove.add(eval("self."+_wtaprop["Name"]),str(_wtaprop))
 				self.objectMove.transferone(self.sw,sw,_wtaprop,"[['ccc'],['ddd']")
 				self.objectMove.lst[sw].prop=str(_wtaprop)
-			except:
-				QMessageBox.about(self, "WiredQT, Error Detected in " + name + ".py!!!","Correct this error before using this usercontrol")
+			except Exception as e:#comment this so that we can see actual error in terminal(wireqt should be executed in terminal)
+				import traceback
+				strs=""
+				for a in traceback.format_exc().splitlines():
+					strs+=a+"\n"				
+				QMessageBox.about(self,"WiredQT, Error Detected in " + name + ".py!!!",strs+"\n\n"+"Correct this error before using this usercontrol")
 			a=0
 			QApplication.restoreOverrideCursor()
 			return
@@ -2105,7 +2116,10 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			start_new_thread(self._SourceBrowse,(True,))
 			self.form_load=True
 		if self.sch.Event():#timer routine
-
+			if self.stepin.Enable==True:
+				self._xEntry1x.Enable=True
+			else:
+				self._xEntry1x.Enable=False			
 			#code here
 			#print(TimeToString())
 			if self.timeoutdestroy!=-1:
@@ -2123,6 +2137,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 	def eventFilter(self, obj, event):
 		#if obj == self.btn and event.type() == QtCore.QEvent.HoverEnter:
 		#    self.onHovered()
+		GRID_OFFSET=5
 		if event.type() == QtCore.QEvent.KeyPress:
 
 			#print(event.key())     
@@ -2225,7 +2240,6 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				pass
 		if event.type() == QtCore.QEvent.MouseButtonRelease:
 			if self.objectMove.exist(obj)==False:
-				#print('form release')       
 				pass
 		if hasattr(self,'objectMove')==True and obj!=self:#dont entertain if obj=self 
 
@@ -2239,7 +2253,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				if event.button()==1 or event.button()==4:#left and middle
 					self.propertyEditor.resetdefaultproperty()
 					self.objectMove.showselected()                   
-					self.objectMove.obj=self.objectMove.ControlUnderMouse(event.x() ,event.y())
+					self.objectMove.obj=self.objectMove.ControlUnderMouse(event.x()-event.x()%GRID_OFFSET ,event.y()-event.y()%GRID_OFFSET)
 					obj=self.objectMove.obj
 					if obj!=None:
 						self.intellisense.Visible=False
@@ -2254,8 +2268,8 @@ class Handler(QtWidgets.QWidget,usercontrol):
 						if event.button()==4:
 							self.objectMove.setselected(obj)
 							self.objectMove.setflag(obj,True)
-						self.offsety=event.y()-self.sa.verticalScrollBar().value()
-						self.offsetx=event.x()-self.sa.horizontalScrollBar().value()                         
+						self.offsety=event.y()-event.y()%GRID_OFFSET-self.sa.verticalScrollBar().value()
+						self.offsetx=event.x()-event.x()%GRID_OFFSET-self.sa.horizontalScrollBar().value()                         
 						self.objectMove.boundery(obj, self.offsetx-forms(self.objectMove.lst[obj].name).Left+self.sa.horizontalScrollBar().value(),self.offsety-forms(self.objectMove.lst[obj].name).Top+self.sa.verticalScrollBar().value())
 
 						objname=self.objectMove.lst[obj]
@@ -2274,7 +2288,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 						if self.objectMove.multipleselected()==False:
 							self.objectMove.setflag(self.objectMove.obj,False)  
 					if self.objectMove.lst[self.objectMove.obj].hasmoved:
-						self.objectMove.IsInsideControl(self.objectMove.obj, event.x(), event.y())        
+						self.objectMove.IsInsideControl(self.objectMove.obj, event.x()-event.x()%GRID_OFFSET, event.y()-event.y()%GRID_OFFSET)        
 						self.objectMove.resetselected()    
 					#print(obj.objectName," lR")
 
@@ -2288,7 +2302,6 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				#print(obj.objectName," leavex")  
 			if event.type() == QEvent.MouseMove:    
 				if self.objectMove.mousedown:
-
 					#if self.objectMove.obj==None:
 					#    self.objectMove.obj=self.objectMove.ControlUnderMouse(event.x() ,event.y())
 
@@ -2296,19 +2309,27 @@ class Handler(QtWidgets.QWidget,usercontrol):
 						if 1:#self.objectMove.mousedown:
 							self.objectMove.lst[self.objectMove.obj].hasmoved=True
 							if self.objectMove.flag(self.objectMove.obj):
-								x=event.x()#-self.offsetx
-								y=event.y()#-self.offsety
+								x=event.x()-event.x()%GRID_OFFSET#-self.offsetx
+								y=event.y()-event.y()%GRID_OFFSET#-self.offsety
 								if self.objectMove.incwidth or self.objectMove.incheight :
 									self.objectMove.move(x-self.offsetx-self.sa.horizontalScrollBar().value(), y-self.offsety-self.sa.verticalScrollBar().value())
 								else:
-									_x=forms(self.objectMove.lst[self.objectMove.obj].name).Left
-									_y=forms(self.objectMove.lst[self.objectMove.obj].name).Top
+									_x=forms(self.objectMove.lst[self.objectMove.obj].name).Left-forms(self.objectMove.lst[self.objectMove.obj].name).Left%GRID_OFFSET
+									_y=forms(self.objectMove.lst[self.objectMove.obj].name).Top-forms(self.objectMove.lst[self.objectMove.obj].name).Top%GRID_OFFSET
 
 									self.objectMove.move(x-self.offsetx, y-self.offsety)
-									self.offsety=event.y()-self.sa.verticalScrollBar().value()
-									self.offsetx=event.x()-self.sa.horizontalScrollBar().value()                                   
-
+									self.offsety=event.y()-event.y()%GRID_OFFSET-self.sa.verticalScrollBar().value()
+									self.offsetx=event.x()-event.x()%GRID_OFFSET-self.sa.horizontalScrollBar().value()  
+								
+								#try:	
+								#	pos_ = QCursor.pos()
+								#	QCursor.setPos(pos_.x()-pos_.x()%5,pos_.y()-pos_.y()%5)
+								#	pos_ = QCursor.pos()
+								#	print(x,pos_x())
+								#except:
+								#	pass
 							#print(x,y)
+							
 				#print(obj.objectName," movex")  
 			if event.type() == QEvent.MouseButtonDblClick:
 				if self.objectMove.obj!=None:

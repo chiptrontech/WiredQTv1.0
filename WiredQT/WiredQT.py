@@ -9,7 +9,8 @@ from _thread import *
 class Handler(QtWidgets.QWidget,usercontrol):
 	def __init__(self, *param):    
 		super(Handler, self).__init__(None)
-		initUI(self,param,w=1366,h=768,title="WiredQT v1.0",controlbox=True,startpos=(0,30),timeoutdestroy=-1)
+		w,h=DeskTopSize()
+		initUI(self,param,w=w,h=h,title="WiredQT v1.0",controlbox=True,startpos=(0,30),timeoutdestroy=-1)
 		self.GTKForms()
 		self.timer=QtCore.QTimer()
 		self.timer.timeout.connect(self.loop)
@@ -24,8 +25,8 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		self.PutICON()
 		self.jedi=jedi
 		self.jedimodule={}
-		if FileExist("intellisense.txt"):
-			strs=GetFileStr("intellisense.txt")
+		if FileExist("intelisense.txt"):
+			strs=GetFileStr("intelisense.txt")
 			self.jedimodule=eval(strs)
 		a=0	
 	def _showhelp(self,code,word,x,y,wordline,jedimodule,path=""):
@@ -70,7 +71,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				return target,_x-x-1
 			return "",-1
 			
-		print("jedi thinking")
+		print("jedi thingking")
 		sys_path =jedi.get_default_environment().get_sys_path()
 		if jedi.__version__!="0.18.0":
 			script=jedi.Script(source=code,sys_path=sys_path+ [path] )
@@ -96,7 +97,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 							if str(modulename)!="" and modulenotinfolder==True:#add only if module not in project directory eg numpy etc
 								
 								jedimodule.update({modulename.module_name:lst})
-								SaveFileStr("intellisense.txt", str(jedimodule))
+								SaveFileStr("intelisense.txt", str(jedimodule))
 								pass							
 						except:
 							pass
@@ -116,9 +117,11 @@ class Handler(QtWidgets.QWidget,usercontrol):
 	def NewWIndow(self,filename,purescript=False):	
 		QApplication.setOverrideCursor(Qt.WaitCursor)
 		#hide all opened Project/Script
+		
 		for a in self.windows:
 			forms(self.windows[a]).Visible=False
 		self.filename=filename	
+		
 		#Dynamically Load WiredQT5GUI to this forms
 		x=WiredQT5GUI.Handler(self)
 		
@@ -168,16 +171,17 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		self.createwidget("{'Picture': '', 'Name': 'copyWid', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'Copy', 'Height': '30', 'Left': '290', 'Var': '', 'Font': '', 'Top': '0', 'Visible': 'True', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'Name': 'New_Forms', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'New Forms', 'Height': '30', 'Left': '36', 'Var': '', 'Font': 'None', 'Top': '0', 'Visible': 'True', 'BackColor': '[1.0, 1.0, 1.0, 0.24705882352941178]', 'ParentsType': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'Name': 'Close', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'Close Project', 'Height': '30', 'Left': '222', 'Var': '', 'Font': '', 'Top': '0', 'Visible': 'True', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
-		self.createwidget("{'Picture': 'appimage.png', 'Name': 'QLabel12', 'Events': [], 'Enable': 'True', 'Tag': '', 'Width': '1080', 'Help': '', 'Text': '', 'Height': '700', 'Left': '0', 'Var': '', 'Font': '', 'Top': '32', 'Visible': 'True', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QLabel','usercontrol',"[]")
+		self.createwidget("{'Picture': 'logo.png', 'Name': 'QLabel12', 'Events': [], 'Enable': 'True', 'Tag': '', 'Width': '962', 'Help': '', 'Text': '', 'Height': '582', 'Left': '0', 'Var': '', 'Font': '', 'Top': '32', 'Visible': 'True', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QLabel','usercontrol',"[]")
 		self.createwidget("{'Picture': '', 'Name': 'QFileDialog', 'Events': [], 'Enable': 'True', 'Tag': '', 'Width': '100', 'Help': '', 'Text': '', 'Height': '100', 'Left': '724', 'Var': '', 'Font': 'None', 'Top': '38', 'Visible': 'False', 'BackColor': '[1.0, 1.0, 1.0, 0.24705882352941178]', 'ParentsType': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]'}",'QFileDialog','usercontrol',"[]")
 		self.createwidget("{'Picture': '', 'Name': 'QComboBox3', 'Events': '[activated]', 'Enable': 'True', 'Tag': '', 'Width': '316', 'Help': '', 'Text': '', 'Height': '22', 'Left': '501', 'Var': '', 'Font': '', 'Top': '0', 'Visible': 'True', 'BackColor': '[1.0, 1.0, 1.0, 0.24705882352941178]', 'ParentsType': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]'}",'QComboBox','usercontrol',"[['activated', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'Name': 'New_Script', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'New Script', 'Height': '30', 'Left': '0', 'Var': '', 'Font': 'None', 'Top': '0', 'Visible': 'True', 'BackColor': '[1.0, 1.0, 1.0, 0.24705882352941178]', 'ParentsType': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'Name': 'QPushButton7', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'Open Project Folder', 'Height': '30', 'Left': '187', 'Var': '', 'Font': 'None', 'Top': '0', 'Visible': 'True', 'BackColor': '[1.0, 1.0, 1.0, 0.24705882352941178]', 'ParentsType': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
-		self.createwidget("{'Picture': '', 'ForeColor': '(0,0,0,1)', 'Name': 'DB', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'DB', 'Height': '30', 'Left': '444', 'Var': '', 'Font': '', 'Top': '0', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'Visible': 'True'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
+		self.createwidget("{'Picture': '', 'ForeColor': '(0,0,0,1)', 'Name': 'DB', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'DB', 'Height': '30', 'Left': '444', 'Var': '', 'Font': '', 'Top': '0', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'Visible': 'True'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1'], ['released', 'self']]")
 		self.createwidget("{'Picture': '', 'Name': 'pasteWid', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'Paste', 'Height': '30', 'Left': '359', 'Var': '', 'Font': '', 'Top': '0', 'Visible': 'True', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'Name': 'OpenFile', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'Open File', 'Height': '30', 'Left': '71', 'Var': '', 'Font': 'None', 'Top': '0', 'Visible': 'True', 'BackColor': '[1.0, 1.0, 1.0, 0.24705882352941178]', 'ParentsType': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'Name': 'Saveas', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'Save as', 'Height': '30', 'Left': '140', 'Var': '', 'Font': 'None', 'Top': '0', 'Visible': 'True', 'BackColor': '[1.0, 1.0, 1.0, 0.24705882352941178]', 'ParentsType': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'Name': 'cutWid', 'Events': '[clicked]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'Cut', 'Height': '30', 'Left': '325', 'Var': '', 'Font': '', 'Top': '0', 'Visible': 'True', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QPushButton','usercontrol',"[['clicked', 'self,arg1']]")
+		self.createwidget("{'Picture': '', 'Name': 'QPushButton15', 'Events': '[released]', 'Enable': 'True', 'Tag': '', 'Width': '30', 'Help': '', 'Text': 'b4a', 'Height': '30', 'Left': '258', 'Var': '', 'Font': '', 'Top': '0', 'Visible': 'True', 'BackColor': '(1,1,1,0.25)', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QPushButton','usercontrol',"[['released', 'self']]")
 	def Widget(self):
 		return self 
 
@@ -242,6 +246,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			else:
 				buf.update({fname:self.windows[a]})
 				lst.append(fname)	
+		self.filename=fname
 		self.windows=buf
 		self.QComboBox3.List=lst
 		self.QComboBox3.Text=fname
@@ -249,6 +254,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		pass
 
 	def OpenFile_clicked(self,arg1):
+		self.setWindowState(QtCore.Qt.WindowMaximized)
 		if self.filename!="":
 			path=GetPath(self.filename)
 		else:
@@ -266,7 +272,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			self.refreshCombo()
 		self.showdebugbutton()	
 		self.backup(self.filename)
-
+		self._resizeEvent()
 	def copyDependencies(self,saveasFname):
 		from shutil import copyfile
 		if FileExist(GetPath(saveasFname) + '/wired_module.py')==False and GetPath(saveasFname).find('plugin')==-1 and GetPath(saveasFname).find('examples')==-1:
@@ -402,6 +408,8 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		self.QComboBox3_activated(self.QComboBox3.Text)
 		pass
 	def copyWid_clicked(self,arg1):
+		#import pdb;pdb.set_trace()
+		
 		if len(self.windows)==0:return
 		x=self.windows[self.filename].objectMove.lst
 		lst=[]
@@ -479,8 +487,6 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		_fname=GetFilenameNoEXT(fname)
 		if FileExist(fname):
 			SaveFileStr(path+"/"+_fname+CreateFileName()+'.py', GetFileStr(fname))		
-	def DB_clicked(self,arg1):
-		pass
 	def _resizeEvent(self):
 		#print(self.Width,self.Height)
 		try:
@@ -505,6 +511,403 @@ class Handler(QtWidgets.QWidget,usercontrol):
 	def resizeEvent(self, event):
 		self._resizeEvent()
 		return super(Handler, self).resizeEvent(event)	
+	def QPushButton15_released(self):
+	
+		
+		try:
+			self.Save_clicked(None)
+			import tokenTest
+			b4aCustomView=False
+			
+			declare=""
+			initialize=""
+			creation=""
+			routine=""
+			declarelst=[]
+			declarelstfind=[]
+			initializelst=[]
+			initializelstfind=[]
+			creationlst=[]
+			creationlstfind=[]
+			routinelst=[]
+			routinelstfind=[]
+			def addview(a):
+				panel=""
+				#import pdb;pdb.set_trace()
+
+				if a.parent.types=='QFrame'and  a.parent.Var=="ScrollView":
+					panel="Panel."
+				return panel	
+			#for a in self.currentform.addedobj.lst:
+			class transform:
+				class parent:
+					def __init__(self,obj,var):
+						self.Left=forms(obj.parent()).Left
+						self.Top=forms(obj.parent()).Top
+						self.Width=forms(obj.parent()).Width
+						self.Height=forms(obj.parent()).Height
+						self.Name=obj.parent().objectName
+						if self.Name=="Activity":
+							self.Name="mBase"
+						types=str(type(obj.parent())).split('.')[2][:-2]
+						
+						self.types=types
+						
+						self.Var=var
+				def __init__(self,obj,par,var):
+					self.Left=int(obj['Left'])
+					self.Top=int(obj['Top'])
+					self.Width=int(obj['Width'])
+					self.Height=int(obj['Height'])
+					self.parent=self.parent(par,var)
+					self.Name=obj['Name']
+					self.Text=obj['Text']
+					self.Picture=""
+					self.Var=obj['Var']
+					self.BackColor=obj['BackColor']
+					self.ForeColor=obj['ForeColor']
+					self.Var=obj['Var']
+					try:
+						types=str(type(par)).split('.')[2][:-2]
+					except:
+						types=str(type(par))
+
+					if types=="QLabel" and obj['Picture']!="":
+						self.types="Image"
+						self.Picture=obj['Picture']
+					else:
+						self.types=types
+			
+
+			for b in self.windows[self.filename].objectMove.lst:
+				a=self.windows[self.filename].objectMove.lst[b].prop
+				a=eval(a)
+				c=self.windows[self.filename].objectMove.lst[b].name
+				var=eval(self.windows[self.filename].objectMove.lst[b].prop)["Var"]
+				c.parent().objectName
+				#import pdb;pdb.set_trace()
+				parent_var=""
+				for d in self.windows[self.filename].objectMove.lst:
+					if c.parent()==self.windows[self.filename].objectMove.lst[d].name:
+						parent_var=eval(self.windows[self.filename].objectMove.lst[d].prop)['Var']
+
+				#import pdb;pdb.set_trace()
+				a=transform(a,c,parent_var)
+				if a.Name=="Activity":
+					act_x=a.Left
+					act_y=a.Top
+					act_w=a.Width
+					act_h=a.Height										
+				if a.Name!="Activity" and a.Name!="mBase":
+					if a.parent.types!="":
+						parentname=a.parent.Name
+					else:
+						parentname="mBase"
+					base_x=a.parent.Left
+					base_y=a.parent.Top
+					base_w=a.parent.Width
+					base_h=a.parent.Height	
+					try:											
+						x="%0.2f" % (float(a.Left)/int(base_w)) + " * "+parentname+".Width"
+						if a.types=='QFrame':
+							y="%0.2f" % ((float(a.Top)/int(base_h))-0.02) + " * "+parentname+".Height"#put offset
+						else:
+							y="%0.2f" % (float(a.Top)/int(base_h))+ " * "+parentname+".Height"#put offset
+						
+						w="%0.2f" % (float(a.Width)/int(base_w)) + " * "+parentname+".Width"
+						h="%0.2f" % (float(a.Height)/int(base_h)) + " * "+parentname+".Height"
+					except:
+						#widget is not child of Activity
+						continue
+					#initialize+="\t" + a.Name + '.Initialize(\"'+ a.Name + '")\r\n'
+					#initializelst.append("\t" + a.Name + '.Initialize(\"'+ a.Name + '")')
+					#initializelstfind.append("\t" + a.Name + '.Initialize(\"'+ a.Name + '")')
+					if a.types=="<class 'Timer.Handler'>":
+						buf="\t" + a.Name + '.Initialize(\"'+ a.Name + '",1000)'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);	
+						buf="\t" + a.Name + '.Enabled = True'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);
+					elif a.types=="<class 'DataGrid.Handler'>":
+						
+						buf="\t" + a.Name + '.Initialize(Me,\"'+ a.Name + '\",4)'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);	
+						
+						buf="\t\'"+ a.Name + "."+"LoadTableFromCSV(Dir, Filename, HeadersExist)"						
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);												
+				
+						buf="\t\'"+ 'vb6.SetDataGrid(Activity,Main.SQL,' + a.Name + ',"History")'						
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);																		
+					elif a.types=="QFrame" and a.Var!="":	#ScrollView
+						buf="\t" + a.Name + '.Initialize('+ "%0.2f" % (float(a.Height)*100/int(base_h)) + "%y" + ')\'add '+a.Name+'.Height=xx%y at the end of GTKForms, overide size of scroll use ' +a.Name+'.Panel.Height=xx%y'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);						
+						
+					else:	
+						buf="\t" + a.Name + '.Initialize(\"'+ a.Name + '")'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);
+											
+					def getcolor(x):
+						r=eval(x)[0]*255
+						r="%02x" % (int(r))
+						g=eval(x)[1]*255
+						g="%02x" % (int(g))
+						b=eval(x)[2]*255
+						b="%02x" % (int(b))	
+						return r,g,b	
+					'''
+					Supported widget
+					ListBox,WebKit,CheckButton,RadioButton,Entry,Button,Timer,DatagridTreeView,ComboBoxText,HScrollbar,Label,Image,Layout
+					
+					just click properties toolbar to generate b4 code(b4a.txt must exist and there is an Activity and mBase layout )
+					
+					notes
+					1.code that must be retained should be at the begining of Class_Globals or Initialize or GTKForms
+					2.if code already exist events will not be added, add it manualy or delete the bas file(warning, all manualy added code will be erased )
+					3.1and 2 not needed anymore, this produces filename_new.bas if file already exist, just copy all code in "filename_new.bas: related to the new widget added within wiredgtk
+					'''
+			
+					if a.types=="QPushButton":
+						buf='\tDim ' + a.Name + " as Button"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);						
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);									
+					if a.types=="QListView":
+						buf="\t" + a.Name + '.AddSingleLine("My ListView")'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);							
+						buf='\tDim ' + a.Name + " as ListView"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);															r,g,b=getcolor(a.BackColor)
+						if r!="ff" or g!="ff" or b!="ff":
+							buf='\t'+a.Name+".Color =  0xff" + r+g+b	
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+						else:
+							buf='\t'+a.Name+".Color =  0x00" + r+g+b		
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+						r,g,b=getcolor(a.ForeColor)
+						if r!="ff" or g!="ff" or b!="ff":
+							buf='\t'+a.Name+".SingleLineLayout.Label.Color =  0xff" + r+g+b	
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+						else:
+							buf='\t'+a.Name+".SingleLineLayout.Label.Color =  0x00" + r+g+b		
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+							
+					if a.types=="WebKit":
+						buf='\tDim ' + a.Name + " as WebView"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);						
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+					if a.types=="QCheckBox":
+						buf='\tDim ' + a.Name + " as CheckBox"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);						
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")\r\n\t"+a.Name+".Text=\""+a.Text+"\""
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+					if a.types=="QRadioButton":
+						buf='\tDim ' + a.Name + " as RadioButton"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);						
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")\r\n\t"+a.Name+".Text=\""+a.Text+"\""
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+						
+					if a.types=="QLineEdit":
+						buf='\tDim ' + a.Name + " as EditText"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);						
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")\r\n\t"+a.Name+".TextColor=colors.black"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+					if a.types=="<class 'Timer.Handler'>":							
+						buf='\tDim ' + a.Name + " As Timer"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);					
+					if a.types=="<class 'DataGrid.Handler'>":						
+						buf='\tDim ' + a.Name + " as Table"
+						
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);
+						buf='\t'+a.Name+'.AddToParent(mBase,'+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);
+						buf='\t\''+a.Name+'.LoadTableFromCSV(File.DirAssets, "datus.csv", True)'
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);
+						buf='\t\''+a.Name+'.SetDatagrid(Array As String ("A","B","C"),Array(Array As String("1","2","3"),Array As String("4","5","6")))'
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+					if a.types=="QComboBox":
+						buf="\t" + a.Name + '.AddAll(Array As String("Sunday", "Monday"))'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);							
+						buf='\tDim ' + a.Name + " as Spinner"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+						r,g,b=getcolor(a.BackColor)
+						if r!="ff" or g!="ff" or b!="ff":
+							buf='\t'+a.Name+".Color =  0xff" + r+g+b	
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+							buf='\t'+a.Name+".DropdownBackgroundColor =  0xff" + r+g+b	
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+						else:
+							buf='\t'+a.Name+".Color =  0x00" + r+g+b		
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+							buf='\t'+a.Name+".DropdownBackgroundColor =  0x00" + r+g+b		
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);																			
+						r,g,b=getcolor(a.ForeColor)
+						if r!="ff" or g!="ff" or b!="ff":
+							buf='\t'+a.Name+".DropdownTextColor =  0xff" + r+g+b	
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+							buf='\t'+a.Name+".TextColor =  0xff" + r+g+b	
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+							
+						else:
+							buf='\t'+a.Name+".DropdownTextColor =  0x00" + r+g+b		
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);																		
+							buf='\t'+a.Name+".TextColor =  0x00" + r+g+b		
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);																		
+					if a.types=="QSlider":
+						buf="\t" + a.Name + '.Max = 100'
+						initialize+=buf+"\r\n";initializelst.append(buf);initializelstfind.append(buf);							
+						buf='\tDim ' + a.Name + " as SeekBar"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+					if a.types=="QLabel":
+						buf='\tDim ' + a.Name + " as Label"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);
+						r,g,b=getcolor(a.BackColor)
+						if r!="ff" or g!="ff" or b!="ff":
+							buf='\t'+a.Name+".Color =  0xff" + r+g+b
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);							
+						else:
+							buf='\t'+a.Name+".Color =  0x00" + r+g+b
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);							
+						r,g,b=getcolor(a.ForeColor)
+						buf='\t'+a.Name+".TextColor = 0xff" + r+g+b
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+						#if a.Alignment=="LEFT":
+						#	buf='\t'+a.Name+".Gravity = Gravity.CENTER_HORIZONTAL+Gravity.LEFT"
+						#elif a.Alignment=="RIGHT":	
+						#	buf='\t'+a.Name+".Gravity = Gravity.CENTER_HORIZONTAL+Gravity.RIGHT"
+						#else:
+						#	buf='\t'+a.Name+".Gravity = Gravity.CENTER_HORIZONTAL+Gravity.CENTER_VERTICAL"
+						
+						buf='\t'+a.Name+".Gravity = Gravity.Left" #Gravity.CENTER_HORIZONTAL+Gravity.CENTER_VERTICAL
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+						buf='\t'+a.Name+".Text = \"" + a.Text + "\""
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+					if a.types=="Image":
+						buf='\tDim ' + a.Name + " as ImageView"
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);						
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
+						if a.Picture!="":
+							buf='\t'+ a.Name+".Bitmap = LoadBitmapResize(File.DirAssets,\"" + a.Picture + "\","+a.Name+".Width,"+a.Name+".Height,true)"
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);							
+							
+					if a.types=="QFrame":
+						if a.Var=="":
+							buf='\tDim ' + a.Name + " as Panel"
+						if a.Var!="":
+							buf='\tDim ' + a.Name + " as " + a.Var
+							
+						declare+=buf+"\r\n";declarelst.append(buf);declarelstfind.append(buf);							
+						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
+						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+						r,g,b=getcolor(a.BackColor)
+						if r!="ff" or g!="ff" or b!="ff":
+							buf='\t'+a.Name+".Color =  0xff" + r+g+b	
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+						else:
+							buf='\t'+a.Name+".Color =  0x00" + r+g+b		
+							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);												
+					if a.types=="QComboBox":
+						routine+= "Sub " + a.Name + "_" + "ItemClick (Position As Int, Value As Object)\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "ItemClick (Position As Int, Value As Object)\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "ItemClick (Position As Int, Value As Object)")											
+					elif a.types=="QSlider":
+						routine+= "Sub " + a.Name + "_" + "ValueChanged (Value As Int, UserChanged As Boolean)\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "ValueChanged (Value As Int, UserChanged As Boolean)\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "ValueChanged (Value As Int, UserChanged As Boolean)")																	
+					elif a.types=="QListView":
+						routine+= "Sub " + a.Name + "_" + "ItemClick (Position As Int, Value As Object)\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "ItemClick (Position As Int, Value As Object)\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "ItemClick (Position As Int, Value As Object)")																	
+					elif a.types=="<class 'Timer.Handler'>":
+						routine+= "Sub " + a.Name + "_" + "Tick()\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "Tick()\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "Tick()")		
+					elif a.types=="QCheckBox":
+						routine+= "Sub " + a.Name + "_" + "CheckedChange(Checked As Boolean)\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "CheckedChange(Checked As Boolean)\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "CheckedChange(Checked As Boolean)")								
+					elif a.types=="QRadioButton":
+						routine+= "Sub " + a.Name + "_" + "CheckedChange(Checked As Boolean)\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "CheckedChange(Checked As Boolean)\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "CheckedChange(Checked As Boolean)")								
+					elif a.types=="WebKit":
+						routine+= "Sub " + a.Name + "_" + "PageFinished (Url As String)\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "PageFinished (Url As String)\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "PageFinished (Url As String)")								
+						
+					elif a.types=="<class 'DataGrid.Handler'>":
+						routine+= "Sub " + a.Name + "_" + "CellClick (Col As Int, Row As Int)\r\n\tLog(\"CellClick: \" & Col & \" , \" & Row)\r\n\tDim val As String = "+a.Name+".GetValue(Col, Row)\r\n\tToastMessageShow(val,False)\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "CellClick (Col As Int, Row As Int)\r\n\tLog(\"CellClick: \" & Col & \" , \" & Row\r\n\tDim val As String = Table1.GetValue(Col, Row)\r\n\tToastMessageShow(val,False)\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "CellClick (Col As Int, Row As Int)")	
+					else:	
+						routine+= "Sub " + a.Name + "_" + "click()\r\nEnd Sub\r\n"
+						routinelst.append("Sub " + a.Name + "_" + "click()\r\nEnd Sub")
+						routinelstfind.append("Sub " + a.Name + "_" + "click()")					
+			def GetFileStrX(fname):
+				fname=fname.replace('\\','/')
+				fo = open(fname, "rb")
+				str = fo.read(GetFileSize(fname))
+				return str.decode()					
+			strs=GetFileStrX("ctlCustom.bas")
+			strs=strs.replace("declare",declare)
+			strs=strs.replace("initialize",initialize)
+			strs=strs.replace("creation",creation)
+			strs=strs.replace("routine",routine)
+			def SaveFileStrX(fname,str_to_write):
+				fname=fname.replace('\\','/')
+				fo = open(fname, "wb")
+				fo.write(str_to_write.encode());
+				fo.close()
+			if FileExist(GetPath(self.filename) + GetFilenameNoEXT(self.filename)+'.bas')==True:
+				if 0:#skip this we dont need this anymore
+					s=tokenTest.tokenKO()
+					s.addreplace("Sub Class_Globals",declarelstfind,declarelst)
+					s.addreplace("Public Sub GTKForms",creationlstfind,creationlst)
+					s.addreplace("Public Sub Initialize (Callback As Object, EventName As String)",initializelstfind,initializelstfind)
+					#s.addreplace("Public Sub Initialize",initializelstfind,initializelstfind)
+					s.Start(GetPath(self.filename) + GetFilenameNoEXT(self.filename)+'.bas')				
+				SaveFileStrX(GetPath(self.filename) + GetFilenameNoEXT(self.filename)+'_new.bas', strs)		
+			else:	
+				SaveFileStrX(GetPath(self.filename) + GetFilenameNoEXT(self.filename)+'.bas', strs)		
+		except: 
+			pass
+	def createproperty(self):
+		ret = QMessageBox.question(self, 'MessageBox', "Select Yes='Property' No='Event'", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel, QMessageBox.Cancel)
+		if ret==QMessageBox.Yes:
+			x=QInputDialog().getText(self,"MyTitle","MyLabel",text='Text')
+			ret="""	#WiredProperty '%s': ''
+		self._%s=""
+	@property
+	def %s(self):
+		return self._%s
+	@%s.setter	
+	def %s(self,value):
+		self._%s=value"""%(x[0],x[0],x[0],x[0],x[0],x[0],x[0])
+		else:
+			#ret1=self.MsgBox.Display("Enter Event name","oncomm",button=["OK"])
+			#ret2=self.MsgBox.Display("Enter Event param","(self)",button=["OK"])
+			ret1=QInputDialog().getText(self,"MyTitle","Enter Event name",text='oncomm')
+			ret2=QInputDialog().getText(self,"MyTitle","Enter Event param",text='()')
+			#WiredEvent def usercontrolevent(self,value)	#add more events 
+			ret="	#WiredEvent def %s%s#if self.caller!=None and '%s' in self.wiredevents:self.wiredevents['%s']()" % (ret1[0],ret2[0],ret1[0],ret1[0])
+		
+		msgbox = QtWidgets.QMessageBox()
+		msgbox.setText('click "show details"')
+		msgbox.setTextInteractionFlags(QtCore.Qt.NoTextInteraction) # (QtCore.Qt.TextSelectableByMouse)
+		msgbox.setDetailedText(ret)
+		msgbox.exec()
+		
+	
+	def DB_released(self):
+		self.createproperty()
+		pass
 if __name__ == '__main__':
 	import sys
 	app = QtWidgets.QApplication(sys.argv)
