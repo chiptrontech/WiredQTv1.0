@@ -525,7 +525,6 @@ class forms(object):
 #		if type(self.obj)==Gtk.Image:
 #			self.obj.set_from_file (fname)	
 		if type(self.obj)==QLabel:
-			import pdb;pdb.set_trace()
 			import cv2
 			im=cv2.imread(fname,cv2.IMREAD_UNCHANGED)
 			im=cv2.resize(im,(self.Width,self.Height))
