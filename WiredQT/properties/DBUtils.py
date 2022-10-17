@@ -180,7 +180,7 @@ class Initialize:
 			obj = eval("self.parentobj.txt" + a+"_"+itemsString)#self.builder.get_object("txt" + a+"_"+itemsString)
 			j =obj
 			if type(j.obj)==QLineEdit :
-				j.Text=values[i]
+				j.Text=str(values[i])
 			if type(j.obj)==QCheckBox :	
 				j.Text=TrueFalse(values[i])
 			if type(j.obj)==QComboBox:

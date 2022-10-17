@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import * 
-from PyQt5.Qsci import QsciScintilla, QsciLexerPython
+#from PyQt5.Qsci import QsciScintilla, QsciLexerPython
 from copy import deepcopy
 try:
 	import RPi.GPIO as GPIO
@@ -50,18 +50,10 @@ class TableModel(QtCore.QAbstractTableModel):
 			return QtCore.QVariant()
 		if orientation==QtCore.Qt.Horizontal:
 			return QtCore.QVariant(self._columnName[column]) 	
-try:
-	import ctypes
-	user32 = ctypes.windll.user32
-	screensize = [user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)]
-	resizeW=float(screensize[0]/1366.0)
-	resizeH=float(screensize[1]/768.0)	
-	print (screensize)
-except:
-	screensize = [1320, 768]
-	resizeW=float(screensize[0]/1320.0)
-	resizeH=float(screensize[1]/768.0)
-	
+def DeskTopSize():
+	screen_rect = QtWidgets.QApplication.primaryScreen()
+	screen_rect=screen_rect.size()
+	return screen_rect.width(), screen_rect.height()
 def millis():
 	return time.time()*1000
 class Scheduler:
@@ -533,11 +525,18 @@ class forms(object):
 #		if type(self.obj)==Gtk.Image:
 #			self.obj.set_from_file (fname)	
 		if type(self.obj)==QLabel:
+			import pdb;pdb.set_trace()
+			import cv2
+			im=cv2.imread(fname,cv2.IMREAD_UNCHANGED)
+			im=cv2.resize(im,(self.Width,self.Height))
+			self.LoadPictureOCV=im
+			'''
 			self.obj.setAlignment(Qt.AlignCenter)
 			pix=QPixmap()
 			_fname=GetFilename(fname)
 			if FileExist(_fname):
 				fname=_fname
+			
 			if pix.load(fname):
 				pix = pix.scaled(self.obj.size(),Qt.KeepAspectRatio)
 				self.obj.setPixmap(pix)	
@@ -552,8 +551,9 @@ class forms(object):
 			
 				ptr = tmp.bits()
 				ptr.setsize(tmp.byteCount())
-				arr = np.array(ptr).reshape(height, width, 4)  #  Copies the data
+				arr = np.array(ptr).reshape(width, height, 4)  #  Copies the data
 				self.cv= cv2.cvtColor(arr,cv2.COLOR_RGBA2BGR)				
+			'''
 			pass
 	@property
 	def LoadPictureNoResize(self):

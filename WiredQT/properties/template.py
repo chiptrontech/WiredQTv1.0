@@ -5,7 +5,8 @@ from wired_module import *
 class Handler(QtWidgets.QWidget,usercontrol):
 	def __init__(self, *param):    
 		super(Handler, self).__init__(None)
-		initUI(self,param,w=400,h=400,title="WiredQTv5.0",controlbox=True,startpos=(0,30),timeoutdestroy=-1)
+		w,h=DeskTopSize()
+		initUI(self,param,w=w,h=h,title="WiredQTv5.0",controlbox=True,startpos=(0,30),timeoutdestroy=-1)
 		self.GTKForms()
 		self.timer=QtCore.QTimer()
 		self.timer.timeout.connect(self.loop)
