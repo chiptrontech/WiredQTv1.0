@@ -110,8 +110,6 @@ Sub Activity_Resume
 	'Starter.frmsplash1=frmsplash1
 	'Starter.frmpatient1=frmpatient1'''
 	Starter.frmmain1=frmmain1              '1
-	Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_WRITE_EXTERNAL_STORAGE)
-	Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
 End Sub
 
 Sub Activity_Pause (UserClosed As Boolean)
