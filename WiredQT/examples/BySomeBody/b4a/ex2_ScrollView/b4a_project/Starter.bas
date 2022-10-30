@@ -58,6 +58,7 @@ Sub Process_Globals
 	Dim uuid As String
 	Dim FilePath As String
 	Dim statequerry As String
+	Dim CONNECTED As clsParser
 End Sub
 
 Sub Service_Create
@@ -80,6 +81,7 @@ Sub Service_Create
 	SELECTSQL.Initialize("SELECTSQL","#",1)
 	NOTIFENGINEON.Initialize("NOTIFENGINEON","#",1)
 	NOTIFENGINEOFF.Initialize("NOTIFENGINEOFF","#",1)
+	CONNECTED.Initialize("connected",".",3)
 End Sub
 public Sub Println(str As String)
 	Dim x As String
@@ -98,7 +100,16 @@ Sub wsh_NewData(data As String)
 	For aa = 0 To data.Length-1
 		Dim z As String
 		z=data.SubString2(aa,aa+1)
-
+		If CONNECTED.available(z) Then
+			ToastMessageShow(uuid&" connected",False)
+			'wsh.Querry("CREATE TABLE logs(DO CHAR(50),Temp CHAR(50),Ph CHAR(50),Voltage CHAR(50),Current CHAR(50),Power CHAR(50),DateOK CHAR(50))","")
+			'run once to create table in our server
+			'wsh.Querry("CREATE TABLE user(username CHAR(50),data CHAR(50))","")
+			'Dim sql As String=$"insert into user(username, data) values ('${"Rocky"}','${"mydata"}')"$
+			'wsh.Querry(sql,"")
+			
+			'run once to insert table in our server
+		End If
 '		If GOTOMAP.available(z)=True Then
 '			Dim track As KeyLessHome
 '			track=KeyLessHome1
@@ -186,19 +197,19 @@ Sub mnuConnect_Click
 		For i = 0 To PairedDevices.Size - 1
 			L.Add(PairedDevices.GetKeyAt(i)) 'add the friendly name to the list
 		Next
-		Dim res As Int
+		'Dim res As Int
 		'Dim bluetooth As KeyLessBT=KeyLessBT1
-		res=""'CallSub2(bluetooth,"Getlist",L)
-		'res = InputList(L, "Choose device", -1) 'show list with paired devices ask user to choose
-		If 1 Then 'res <> DialogResponse.CANCEL Then
-			PairedDevices.Get(l.Get(res))
+		'res=CallSub2(bluetooth,"Getlist",L)
+		'res = InputListAsync(L, "Choose device", -1,True) 'show list with paired devices ask user to choose
+		'If 1 Then
+			'PairedDevices.Get(l.Get(res))
 '			'CallSub3(Starter,"conns",res,PairedDevices,L)
 '			Serial1.Connect3(PairedDevices.Get(L.Get(res)),1) 'convert the name to mac address 'mcu zigbee
 '			Serial1.Connect3("C0:18:85:87:6B:2E",1)
 '			Serial1.Connect3("00:1B:10:00:0C:66",1)'mcu zigbee
 			'Serial1.Connect(PairedDevices.Get(L.Get(res))) 'convert the name to mac address 'pc base
 			Serial1.Connect(PairedDevices.Get("HC-05")) 'convert the name to mac address 'pc base
-		End If
+		'End If
 	End If
 End Sub
 Sub Timer1_Tick
