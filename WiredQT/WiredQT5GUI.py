@@ -891,6 +891,7 @@ class objectMove:
 									_targetdrop.setWidget(_sourcedrop)																
 								else:	
 									_sourcedrop.setParent(_targetdrop)
+									print(_targetdrop,_sourcedropSA)
 								_sourcedropSA.setParent(_targetdrop)
 								sourcedrop.Width=w
 								sourcedrop.Height=h    
@@ -1403,10 +1404,21 @@ class Handler(QtWidgets.QWidget,usercontrol):
 						if param['Tag']=='Activex':
 							_type=GetFilenameNoEXT(x[1])
 							self.plugin.update({_type:x[1]})
+						
 						if param["ParentsType"]=='':#add to usercontrol
 							self.objectMove.transferone(self.sw,sw,param,events)
 						else:
-							#print("this widget has parent")
+							pass
+							for a in self.objectMove.lst:
+								props=eval(self.objectMove.lst[a].prop)
+								if "self."+props['Name']==str(x[2]):
+									parent=a
+									print("OKKK",parent)
+									print(parent in self.objectMove.lst)
+									break
+							print("this widget has parent",str(x[2]),sw)
+							#self.objectMove.lst[sw].name.setParent(parent)
+							#self.objectMove.lst[sw].sa.setParent(parent)
 							pass
 						
 					except Exception as e:
@@ -1730,6 +1742,64 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			self.stop.Enable=True
 			self.stop.ForeColor=[1,0,0,1]
 			self.run.ForeColor=[0.5,0.5,0.5,1]
+	def WidgetProperties(self,name):
+		for a in self.objectMove.lst:
+			_prop=self.objectMove.lst[a]
+			prop=eval(_prop.prop)
+			
+			if prop['Name']==name:
+				prop['Left']=forms(_prop.sa).Left
+				prop['Top']=forms(_prop.sa).Top
+				return prop
+		return None				
+	def WidgetPlaced(self):
+		class ret:
+			def __init__(self):
+				self.lst={}
+			def Exist(self,name):
+				return name in self.lst
+			
+			def IsParent(self,name):
+				if self.Exist(name):
+					if self.lst[name]!="usercontrol":
+						return True
+					else:
+						return False
+			def Widgetobj(self,name,objmove):
+				if self.Exist(name):
+					for a in objmove.lst:
+						n=objmove.lst[a]
+						if eval(n.prop)['Name']==name:
+							return n 
+				return None								
+			def GetChild(self,name):
+				lst=[]
+				if self.Exist(name):
+					for a in self.lst:
+						if self.lst[a]==name:
+							lst.append(a);	
+				return lst
+			def GetParent(self,name):
+				if self.Exist(name):
+					for a in self.lst:
+						if a==name:
+							return self.lst[a];
+				return 'usercontrol'				
+						
+		_ret=ret()	
+		for obj in self.objectMove.lst:
+			_obj=self.objectMove.lst[obj]
+			x1=_obj.name.objectName
+			if type(_obj.name.parent().objectName)==str and _obj.name.parent().objectName!='':
+				x2=_obj.name.parent().objectName
+					
+			elif type(_obj.name.parent().parent().objectName)==str and _obj.name.parent().parent().objectName!='' and type(_obj.name)==QWidget:
+				x2=_obj.name.parent().parent().objectName		
+			else:    
+				x2="usercontrol"
+			_ret.lst.update({x1:x2})
+		return _ret
+		
 	def GenerateWidget(self):
 		def generate():#update self.objectMove.lst[obj].prop 
 			for obj in self.objectMove.lst:
@@ -1874,7 +1944,8 @@ class Handler(QtWidgets.QWidget,usercontrol):
 	def butP(self):	
 		self._butP()
 	def _butP(self,name="",prop=None):
-		
+		if prop!=None:
+			cname=prop['Name']
 		self.objectMove.resetselected()
 		if name=="":
 			name=self.sender().text()
@@ -1950,18 +2021,45 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			_wtaprop['Top']=prop['Top']
 			_wtaprop['Width']=prop['Width']
 			_wtaprop['Height']=prop['Height']
-			'''		
-		self.createwidget(str(_wtaprop), name, 'usercontrol','[]')
-
+		
+			'''	
+		
+		if prop!=None:
+			n=self.WidgetPlaced()#index zero is last sel name,folowed by dictionary of all widget with parents
+			y=n.GetParent(cname)
+			z=n.GetChild(y)
+			parent=n.GetParent(cname)
+			lst=n.lst 
+		if prop==None or parent=='usercontrol':
+			_wtaprop['ParentsType']=''# added for paste from cut(might have parent but already cut and paste)
+			self.createwidget(str(_wtaprop), name, 'usercontrol','[]')#oct 29 2022
+		else:
+			parent=n.GetParent(cname)
+			parent_prop=self.WidgetProperties(parent)
+			_wtaprop['Left']=int(_wtaprop['Left'])+int(parent_prop['Left'])
+			_wtaprop['Top']=int(_wtaprop['Top'])+int(parent_prop['Top'])			
+			self.createwidget(str(_wtaprop), name, "self."+parent,'[]')#oct 29 2022
+		
+		
 		sw=self.objectMove.add(eval("self._"+_wtaprop["Name"]),str(_wtaprop))
 
 		self.objectMove.transferone(self.sw,sw,_wtaprop)
+		
+		self.objectMove.IsInsideControl(sw,_wtaprop['Left'],_wtaprop['Top'] )        
+		self.objectMove.resetselected()		
+		
+		n=self.WidgetPlaced()#index zero is last sel name,folowed by dictionary of all widget with parents
+		obj=n.Widgetobj(_wtaprop['Name'],self.objectMove)
+		if obj!=None:
+			self.propertyEditor.setwidgetproperties(obj,True)  
+		
 		#print("xxx",self.QColorDialog0.Width,self.QColorDialog0.Height)
 		if name=='QLCDNumber':
 			exec('self.'+name +str(len(self.objectMove.lst)-1)+".obj.display(100)")
 	def createwidget(self,prop,control,parent,event=[]):
 		createWidget(self,prop,control,parent,event)         
-	def GTKForms(self):		self.createwidget("{'Picture': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]', 'Top': '56', 'Events': '[activated]', 'Enable': 'True', 'Tag': '', 'Width': '200', 'Help': '', 'Text': 'cbomethods', 'Height': '25', 'Left': '601', 'Var': '', 'Font': '', 'Name': 'intellisense', 'BackColor': '[1.0, 1.0, 1.0, 1.0]', 'ParentsType': '', 'Visible': 'False'}",'QComboBox','usercontrol',"[['activated', 'self,e']]")
+	def GTKForms(self):
+		self.createwidget("{'Picture': '', 'ForeColor': '[0.0, 0.0, 0.0, 1.0]', 'Top': '56', 'Events': '[activated]', 'Enable': 'True', 'Tag': '', 'Width': '200', 'Help': '', 'Text': 'cbomethods', 'Height': '25', 'Left': '601', 'Var': '', 'Font': '', 'Name': 'intellisense', 'BackColor': '[1.0, 1.0, 1.0, 1.0]', 'ParentsType': '', 'Visible': 'False'}",'QComboBox','usercontrol',"[['activated', 'self,e']]")
 		self.createwidget("{'Picture': '', 'Height': '21', 'Events': '[activated]', 'Enable': 'True', 'Tag': '', 'Width': '207', 'Help': '', 'Text': '', 'Name': 'cbomethods', 'Left': '285', 'Var': '', 'BackColor': '(1,1,1,0.25)', 'Top': '1', 'Visible': 'True', 'Font': '', 'ParentsType': '', 'ForeColor': '(0,0,0,1)'}",'QComboBox','usercontrol',"[['activated', 'self,arg1']]")
 		self.createwidget("{'Picture': '', 'ForeColor': '(0,0,0,1)', 'Events': '[activated]', 'Font': '', 'Enable': 'True', 'Tag': '', 'Width': '172', 'Help': '', 'Text': '', 'Name': 'cboclass', 'Left': '86', 'Var': '', 'BackColor': '(1,1,1,0.25)', 'Top': '0', 'Height': '21', 'ParentsType': '', 'Visible': 'True'}",'QComboBox','usercontrol',"[['activated', 'self,arg1']]")
 	def Widget(self):

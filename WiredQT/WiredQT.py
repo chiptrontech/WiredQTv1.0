@@ -415,7 +415,9 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		lst=[]
 		for a in x:
 			if x[a].selected:
+				
 				prop=eval(x[a].prop)
+				prop['Name']=x[a].name.objectName
 				prop.update({"Left":str(forms(x[a].name).Left+20)})
 				prop.update({"Top":str(forms(x[a].name).Top)})
 				prop.update({"Width":str(forms(x[a].name).Width)})
@@ -456,6 +458,12 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		if self.copied!=None:
 			for a in self.copied:
 				self.windows[self.filename]._butP(a[0],a[1])
+			self.windows[self.filename].objectMove.resetselected()	
+			for a in self.copied:#highlight newly paste
+				n=self.windows[self.filename].WidgetPlaced()
+				obj=n.Widgetobj(a[1]['Name'],self.windows[self.filename].objectMove)
+				obj.selected=True
+			self.windows[self.filename].objectMove.showselected()	
 		pass
 	def example_clicked(self,arg1):
 		#self.QFileDialog.obj.setWindowTitle("Select Example WireQT app")
@@ -593,6 +601,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 
 				#import pdb;pdb.set_trace()
 				a=transform(a,c,parent_var)
+				a.Name=c.objectName#0ct 29 2022
 				if a.Name=="Activity":
 					act_x=a.Left
 					act_y=a.Top
