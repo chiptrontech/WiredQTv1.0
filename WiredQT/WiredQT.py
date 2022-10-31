@@ -803,7 +803,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 						buf='\t'+parentname+'.'+addview(a)+'AddView('+a.Name+','+x +','+y+','+w+','+h+")"
 						creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);						
 						if a.Picture!="":
-							buf='\t'+ a.Name+".Bitmap = LoadBitmapResize(File.DirAssets,\"" + a.Picture + "\","+a.Name+".Width,"+a.Name+".Height,true)"
+							buf='\t'+ a.Name+".Bitmap = LoadBitmapResize(File.DirAssets,\"" + a.Picture + "\","+a.Name+".Width,"+a.Name+".Height,false)"
 							creation+=buf+"\r\n";creationlst.append(buf);creationlstfind.append(buf);							
 							
 					if a.types=="QFrame":
