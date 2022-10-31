@@ -69,7 +69,7 @@ Sub Service_Create
 	Serial1.Initialize("Serial1")
 
 	
-	wsh.Initialize(Me,"wsh",uuid,"KEYLESSSERVER","db_testX")
+	wsh.Initialize(Me,"wsh",uuid,"KEYLESSSERVER","db_testX.sqlite3")
 	wsh.InitWTAServer()
 	GOTOMAP.Initialize("GOTOMAP","#",1)
 	RFID.Initialize("RFID","#",1)
@@ -186,19 +186,19 @@ Sub mnuConnect_Click
 		For i = 0 To PairedDevices.Size - 1
 			L.Add(PairedDevices.GetKeyAt(i)) 'add the friendly name to the list
 		Next
-		Dim res As Int
+		'Dim res As Int
 		'Dim bluetooth As KeyLessBT=KeyLessBT1
-		res=""'CallSub2(bluetooth,"Getlist",L)
-		'res = InputList(L, "Choose device", -1) 'show list with paired devices ask user to choose
-		If 1 Then 'res <> DialogResponse.CANCEL Then
-			PairedDevices.Get(l.Get(res))
+		'res=CallSub2(bluetooth,"Getlist",L)
+		'res = InputListAsync(L, "Choose device", -1,True) 'show list with paired devices ask user to choose
+		'If 1 Then
+			'PairedDevices.Get(l.Get(res))
 '			'CallSub3(Starter,"conns",res,PairedDevices,L)
 '			Serial1.Connect3(PairedDevices.Get(L.Get(res)),1) 'convert the name to mac address 'mcu zigbee
 '			Serial1.Connect3("C0:18:85:87:6B:2E",1)
 '			Serial1.Connect3("00:1B:10:00:0C:66",1)'mcu zigbee
 			'Serial1.Connect(PairedDevices.Get(L.Get(res))) 'convert the name to mac address 'pc base
 			Serial1.Connect(PairedDevices.Get("HC-05")) 'convert the name to mac address 'pc base
-		End If
+		'End If
 	End If
 End Sub
 Sub Timer1_Tick

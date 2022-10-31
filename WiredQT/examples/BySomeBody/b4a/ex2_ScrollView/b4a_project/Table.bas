@@ -150,7 +150,8 @@ End Sub
 'Adds a row to the table
 'Example:<code>Table1.AddRow(Array As String("aaa", "ccc", "ddd", "eee"))</code>
 Public Sub AddRow(Values() As String)
-	If Values.Length <> NumberOfColumns Then
+	
+	If Values.Length <> NumberOfColumns Then	'If Values.Length <> NumberOfColumns Then'for array
 		Log("Wrong number of values.")
 		Return
 	End If

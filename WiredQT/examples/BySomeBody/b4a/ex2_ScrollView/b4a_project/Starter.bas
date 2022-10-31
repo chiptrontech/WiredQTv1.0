@@ -70,7 +70,7 @@ Sub Service_Create
 	Serial1.Initialize("Serial1")
 
 	
-	wsh.Initialize(Me,"wsh",uuid,"KEYLESSSERVER","db_testX")
+	wsh.Initialize(Me,"wsh",uuid,"KEYLESSSERVER","db_testX.sqlite3")
 	wsh.InitWTAServer()
 	GOTOMAP.Initialize("GOTOMAP","#",1)
 	RFID.Initialize("RFID","#",1)
