@@ -323,16 +323,18 @@ class PropertyEditor:
 	def addproperty(self,ret):
 
 		for a in ret:
-			_dict=eval("{"+a+"}")
-			for b in _dict:
-				if b!="list":
-					label=[b]
-				if "list" in _dict:	
-					values=[_dict['list']]
-				else:
-					values=[""]
-			self.property(label, values,addonly=True)
-
+			try:
+				_dict=eval("{"+a+"}")				
+				for b in _dict:
+					if b!="list":
+						label=[b]
+					if "list" in _dict:	
+						values=[_dict['list']]
+					else:
+						values=[""]
+				self.property(label, values,addonly=True)
+			except:
+				print("Invalid param",a)#nov 1 2022
 
 	def property(self,label,values,addonly=False):
 		if addonly==False:
