@@ -524,10 +524,14 @@ class forms(object):
 	def LoadPicture(self,fname):
 #		if type(self.obj)==Gtk.Image:
 #			self.obj.set_from_file (fname)	
+		if(fname==""):
+			return
 		if type(self.obj)==QLabel:
 			import cv2
+			if fname==None: return
 			im=cv2.imread(fname,cv2.IMREAD_UNCHANGED)
 			im=cv2.resize(im,(self.Width,self.Height))
+			im= cv2.cvtColor(im,cv2.COLOR_BGR2RGB)#for windows
 			self.LoadPictureOCV=im
 			'''
 			self.obj.setAlignment(Qt.AlignCenter)
@@ -568,11 +572,14 @@ class forms(object):
 	@LoadPicture.setter
 	def LoadPictureOCV(self,imOCV):
 		if type(self.obj)==QLabel:
-			import cv2
-			if len(imOCV.shape)==3:
-				height, width, channel = imOCV.shape
-				if channel==3:
-					imOCV= cv2.cvtColor(imOCV,cv2.COLOR_BGR2RGB)
+			#import cv2
+			#if len(imOCV.shape)==3:
+			#	height, width, channel = imOCV.shape
+			#	if channel==3:
+			#		try:
+			#			imOCV= cv2.cvtColor(imOCV,cv2.COLOR_BGR2RGB)
+			#		except:
+			#			print("imOCV= cv2.cvtColor(imOCV,cv2.COLOR_BGR2RGB) error line 580 wiredmodule")
 			self.cv=setPicture(self.obj,imOCV)	
 	@property
 	def Active(self):
