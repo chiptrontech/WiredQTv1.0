@@ -324,6 +324,10 @@ class PropertyEditor:
 
 		for a in ret:
 			try:
+				comment=a.find('#')
+				if (comment!=-1):
+					a=a[:comment]
+					a=a.replace('\t','')
 				_dict=eval("{"+a+"}")				
 				for b in _dict:
 					if b!="list":
@@ -334,7 +338,7 @@ class PropertyEditor:
 						values=[""]
 				self.property(label, values,addonly=True)
 			except:
-				print("Invalid param",a)#nov 1 2022
+				QMessageBox.about(self.parent,"User Control error!!!","Invalid param "+ a)
 
 	def property(self,label,values,addonly=False):
 		if addonly==False:

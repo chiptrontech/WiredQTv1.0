@@ -1,2 +1,2 @@
-path=c:\python37
+path=c:\python37df
 python WiredQT.py

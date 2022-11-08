@@ -891,7 +891,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		ret = QMessageBox.question(self, 'MessageBox', "Select Yes='Property' No='Event'", QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel, QMessageBox.Cancel)
 		if ret==QMessageBox.Yes:
 			x=QInputDialog().getText(self,"MyTitle","MyLabel",text='Text')
-			ret="""	#WiredProperty '%s': ''
+			ret="""	#WiredProperty '%s': ''\t#,"list":['True','False'] 
 		self._%s=""
 	@property
 	def %s(self):
