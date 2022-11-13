@@ -555,7 +555,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 						self.Width=forms(obj.parent()).Width
 						self.Height=forms(obj.parent()).Height
 						self.Name=obj.parent().objectName
-						if self.Name=="Activity":
+						if self.Name=="mBase":
 							self.Name="mBase"
 						types=str(type(obj.parent())).split('.')[2][:-2]
 						
@@ -596,26 +596,41 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				#import pdb;pdb.set_trace()
 				parent_var=""
 				for d in self.windows[self.filename].objectMove.lst:
+					n=eval(self.windows[self.filename].objectMove.lst[d].prop)["Name"]
+					print(n)
+					if n=="mBase":
+						parentnew=forms(self.windows[self.filename].objectMove.lst[d].sa)
+					print(c.parent())
 					if c.parent()==self.windows[self.filename].objectMove.lst[d].name:
 						parent_var=eval(self.windows[self.filename].objectMove.lst[d].prop)['Var']
 
 				#import pdb;pdb.set_trace()
 				a=transform(a,c,parent_var)
 				a.Name=c.objectName#0ct 29 2022
-				if a.Name=="Activity":
+				if a.Name=="mbase":
 					act_x=a.Left
 					act_y=a.Top
 					act_w=a.Width
 					act_h=a.Height										
-				if a.Name!="Activity" and a.Name!="mBase":
+				#if a.Name!="Activity" and a.Name!="mBase":
+				if 1:
 					if a.parent.types!="":
-						parentname=a.parent.Name
+						parentname="mbase"#a.parent.Name
 					else:
 						parentname="mBase"
+					if parent_var!="ScrollView":
+						a.parent.Left= parentnew.Left
+						a.parent.Top= parentnew.Top
+						a.parent.Width= parentnew.Width
+						a.parent.Height= parentnew.Height
+					else:
+						parentname=a.parent.Name
 					base_x=a.parent.Left
 					base_y=a.parent.Top
 					base_w=a.parent.Width
 					base_h=a.parent.Height	
+					if a.Name=="mBase":
+						a.Name="bkgimage"
 					try:											
 						x="%0.2f" % (float(a.Left)/int(base_w)) + " * "+parentname+".Width"
 						if a.types=='QFrame':
