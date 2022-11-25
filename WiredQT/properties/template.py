@@ -31,7 +31,14 @@ class Handler(QtWidgets.QWidget,usercontrol):
 				if self.timeoutdestroy==0:
 					pass#self.unload(None)
 			self.sch.Start()#restart scheduler      
-		
+	def closeEvent(self, event):
+		# do stuff
+		if 1:
+			event.accept() # let the window close
+			self.timer.timeout.disconnect()
+			del self	
+		else:
+			event.ignore()	
 	def connect(self,ev,evusr):
 		self.wiredevents.update({ev:evusr})     
 	def activeXcreated(self,*args):

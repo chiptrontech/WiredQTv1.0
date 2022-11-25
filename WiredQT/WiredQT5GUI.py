@@ -2111,82 +2111,87 @@ class Handler(QtWidgets.QWidget,usercontrol):
 
 		buf=getLine()
 		buf2=getLine2()
-		if (buf2!=''):
-			#print("at last stdout has data",buf2)
-			while(buf2.find("(Pdb) ")==0):
-				buf2=buf2[6:]			
-			pdbheader= '(Pdb) > /'
-			pdbheader2= '> '#pdbheader2= '> /'
-
-			if buf2[:2]==pdbheader or buf2.find(pdbheader2) ==0:
-				if buf2.find(pdbheader2)==0:
-					pdbheader=pdbheader2
-				offset=len(pdbheader)
-				_start=buf2[offset:].find("(")
-				_end=buf2[offset:].find(")")
-				codeline=buf2[_start+offset+1:_end+offset]
-				fname=buf2[offset-1:offset+_start]
-				fname=fname.replace("\\","/")
-				fname=fname.strip()
-
-				#print("fname",fname)
-				#print("codeline",codeline)
-				self.showdebugbutton_rot(True)
-				fnamex=self.filename.lower()
-				fnamey=fname				
-				if fnamey[len(fnamey)-len(fnamex):]==fnamex:
-					
-					self.QSCI.Visible=True
-					self.QSCIShow(True)#self.QSCI.Visible=True
-					self.caller.QComboBox3_activated(fname)
-					self.QSCI.setCursorPosition(int(codeline)-1,2)
-					self.QSCI.obj.setFocus()
-					self.window().activateWindow()
-					
-				else:
-					windows=[a.lower() for a in list(self.caller.windows.keys())]
-					windowsRetainCase=list(self.caller.windows.keys())
-					
-					if (fnamey in windows)==False:#open new window for this script										
-						self.caller.NewWIndow(fname)
-						self.caller.refreshCombo()
-						self.caller.windows[fname]. QSCI.Visible=True
-						self.caller.windows[fname].QSCIShow(True)
-						self.caller.windows[fname].QSCI.setCursorPosition(int(codeline)-1,2)
-						self.caller.windows[fname].QSCI.obj.setFocus()
-						self.window().activateWindow()
-						self.caller.showdebugbutton()
+		try:
+			if (buf2!=''):
+				#print("at last stdout has data",buf2)
+				while(buf2.find("(Pdb) ")==0):
+					buf2=buf2[6:]			
+				pdbheader= '(Pdb) > /'
+				pdbheader2= '> '#pdbheader2= '> /'
+	
+				if buf2[:2]==pdbheader or buf2.find(pdbheader2) ==0:
+					if buf2.find(pdbheader2)==0:
+						pdbheader=pdbheader2
+					offset=len(pdbheader)
+					_start=buf2[offset:].find("(")
+					_end=buf2[offset:].find(")")
+					codeline=buf2[_start+offset+1:_end+offset]
+					fname=buf2[offset-1:offset+_start]
+					fname=fname.replace("\\","/")
+					fname=fname.strip()
+	
+					#print("fname",fname)
+					#print("codeline",codeline)
+					self.showdebugbutton_rot(True)
+					fnamex=self.filename.lower()
+					fnamey=fname				
+					if fnamey[len(fnamey)-len(fnamex):]==fnamex:
 						
-						
-						a=0
-					else:	#script already open, pdb gives lower case in file,so we use this technique
-						index=windows.index(fname)
-						fname=windowsRetainCase[index]					
+						self.QSCI.Visible=True
+						self.QSCIShow(True)#self.QSCI.Visible=True
 						self.caller.QComboBox3_activated(fname)
-						self.caller.windows[fname]. QSCI.Visible=True
-						self.caller.windows[fname].QSCIShow(True)
-						self.caller.windows[fname].QSCI.setCursorPosition(int(codeline)-1,2)
-						self.caller.windows[fname].QSCI.obj.setFocus()
-						self.window().activateWindow()	
+						self.QSCI.setCursorPosition(int(codeline)-1,2)
+						self.QSCI.obj.setFocus()
+						self.window().activateWindow()
 						
+					else:
+						windows=[a.lower() for a in list(self.caller.windows.keys())]
+						windowsRetainCase=list(self.caller.windows.keys())
 						
-					print("Open new file for display")
-			self.importnextflag=False
-			if len(buf2)>1 and (buf2[0]==">" or buf2[0:2]=="->"):
-				pass
-			else:
-				self.OutputPane.Text+=buf2
-				self.OutputPane.obj.setCursorPosition(self.OutputPane.obj.lines(),1)
-				self.caller.updateAllOutputPane()
-
-			#cursor = self.OutputPane.textCursor()
-			#cursor.movePosition(QTextCursor.End);
-			#self.OutputPane.setTextCursor(cursor);
-
-			if len(buf2)>10:
-				if buf2[:9]=="-> import":
-					self.importnextflag=True
-
+						if (fnamey in windows)==False:#open new window for this script										
+							self.caller.NewWIndow(fname)
+							self.caller.refreshCombo()
+							self.caller.windows[fname]. QSCI.Visible=True
+							self.caller.windows[fname].QSCIShow(True)
+							self.caller.windows[fname].QSCI.setCursorPosition(int(codeline)-1,2)
+							self.caller.windows[fname].QSCI.obj.setFocus()
+							self.window().activateWindow()
+							self.caller.showdebugbutton()
+							
+							
+							a=0
+						else:	#script already open, pdb gives lower case in file,so we use this technique
+							index=windows.index(fname)
+							fname=windowsRetainCase[index]					
+							self.caller.QComboBox3_activated(fname)
+							self.caller.windows[fname]. QSCI.Visible=True
+							self.caller.windows[fname].QSCIShow(True)
+							self.caller.windows[fname].QSCI.setCursorPosition(int(codeline)-1,2)
+							self.caller.windows[fname].QSCI.obj.setFocus()
+							self.window().activateWindow()	
+							
+							
+						print("Open new file for display")
+				self.importnextflag=False
+				if len(buf2)>1 and (buf2[0]==">" or buf2[0:2]=="->"):
+					pass
+				else:
+						self.OutputPane.Text+=buf2
+						self.OutputPane.obj.setCursorPosition(self.OutputPane.obj.lines(),1)
+						self.caller.updateAllOutputPane()
+			
+				#cursor = self.OutputPane.textCursor()
+				#cursor.movePosition(QTextCursor.End);
+				#self.OutputPane.setTextCursor(cursor);
+	
+				if len(buf2)>10:
+					if buf2[:9]=="-> import":
+						self.importnextflag=True
+		except:
+			buf=''
+			line=''
+			buf2=''
+			print("special char error")			
 		line=''
 		while(buf!=''):
 			line+=buf

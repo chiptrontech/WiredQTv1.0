@@ -141,6 +141,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			self.windows[self.filename].Designer.ForeColor=(0.5,0.5,0.5,1)
 		self.jedi=jedi	
 		QApplication.restoreOverrideCursor()
+		self._resizeEvent()
 	def PutICON(self):
 		def doit(p,image):
 			if FileExist("images/"+image):
