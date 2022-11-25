@@ -39,11 +39,19 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			del self	
 		else:
 			event.ignore()	
+	def resizeEvent(self, event):
+		# do stuff
+		return super(Handler, self).resizeEvent(event)				
 	def connect(self,ev,evusr):
 		self.wiredevents.update({ev:evusr})     
 	def activeXcreated(self,*args):
 		pass    
 	def eventFilter(self, obj, event):
+		'''
+		if obj==self.QTextEdit1.obj:
+			if event.type() == QtCore.QEvent.KeyPress:
+				print(event.key())     
+		'''
 		return super(Handler, self).eventFilter(obj, event)
 	
 if __name__ == '__main__':
