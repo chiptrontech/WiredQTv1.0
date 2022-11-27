@@ -2253,11 +2253,24 @@ class Handler(QtWidgets.QWidget,usercontrol):
 			self.objectMove.key=event.key()
 			if self.objectMove.obj!=None and event.key()==16777223 and self.sw==obj:#delete only if in design mode
 				lst=[]
+				n=self.WidgetPlaced()#index zero is last sel name,folowed by dictionary of all widget with parents
+				
+				
 				for a in self.objectMove.lst:
 					if self.objectMove.lst[a].selected:
+						cname=eval(self.objectMove.lst[a].prop)["Name"]#object name
 						lst.append(a)
+				#parent has been deleted		
+				z=n.GetChild(cname)
+				for a in self.objectMove.lst:
+					cnameb=eval(self.objectMove.lst[a].prop)["Name"]
+					if (cnameb in z) ==True and cnameb!=cname:#dont include parent as it is already appended to lst
+						lst.append(a)				
+				#parent has been deleted		
+				
 				for a in lst:
 					self.objectMove.delete(a)
+				
 			if self.objectMove.key==16777216:#esc
 				self.intellisense.Visible=False
 				self.objectMove.resetselected()  

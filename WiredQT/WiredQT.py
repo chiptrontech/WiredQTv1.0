@@ -416,7 +416,17 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		lst=[]
 		for a in x:
 			if x[a].selected:
-				
+				#select child
+				n=self.windows[self.filename].WidgetPlaced()
+				cname=eval(x[a].prop)["Name"]#object name
+				z=n.GetChild(cname)
+				for b in x:
+					cname=eval(x[b].prop)["Name"]#object name
+					if cname in z:
+						x[b].selected=True
+						
+		for a in x:
+			if x[a].selected:
 				prop=eval(x[a].prop)
 				prop['Name']=x[a].name.objectName
 				prop.update({"Left":str(forms(x[a].name).Left+20)})
