@@ -283,7 +283,8 @@ def Now():
 def NowToString():
 	s=Now()
 	return str(s.month) + "/" +str(s.day)  + "/" + str(s.year)  + " " +str(s.hour)  + ":" +str(s.minute)  + ":" +str(s.second)
-
+def NowToStringSQL():
+	return datetime.datetime.now().__str__()
 def TimeInBetween(mintime,maxtime,curr):
 	return (mintime<=curr) and (maxtime>=curr)
 
