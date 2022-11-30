@@ -2056,6 +2056,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		
 		n=self.WidgetPlaced()#index zero is last sel name,folowed by dictionary of all widget with parents
 		obj=n.Widgetobj(_wtaprop['Name'],self.objectMove)
+		self.propertyEditor.resetdefaultproperty()
 		if obj!=None:
 			self.propertyEditor.setwidgetproperties(obj,True)  
 		
