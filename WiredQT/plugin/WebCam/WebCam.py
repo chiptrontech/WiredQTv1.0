@@ -31,7 +31,7 @@ class Handler(QtWidgets.QWidget,usercontrol):
 		return self._camindex
 	@camindex.setter	
 	def camindex(self,value):
-		self._camindex=int(value)
+		self._camindex=value
 	@property
 	def Width(self):
 		return self.Image1.Width
@@ -75,12 +75,17 @@ class Handler(QtWidgets.QWidget,usercontrol):
 	def Open(self):
 		return self._Open
 	@Open.setter	
-	def Open(self,value):
+	def Open(self,value):#tplink c200 value=rtsp://adminx:123456@192.168.4.237//stream1
 		self._Open=value
 		if self.video_capture==None:
 			if value=='True' or value==True:
 				try:#skip cv2 while dev on QT
-					self.video_capture = cv2.VideoCapture(int(self._camindex))
+					try:
+						self._camindex=int(self._camindex)
+					except:
+						print('rtsp cam')
+					self.video_capture = cv2.VideoCapture(self._camindex)
+					self.video_capture.set(cv2.CAP_PROP_FOURCC,cv2.VideoWriter_fourcc('M','J','P','G'))
 					start_new_thread(self.acquireFrame ,())
 				except:
 					pass
