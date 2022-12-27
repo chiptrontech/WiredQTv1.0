@@ -273,11 +273,12 @@ class PropertyEditor:
 			if FileExist(fileInProject):
 				name=GetPath(self.parent.filename)+name+".py"
 			ret=extractModuleProperties(name)
+			#print('rrr',ret)
 			self.addproperty(ret)		
 		if _wid.prop!="":	
 			prop=eval(_wid.prop)	
 		for a in self.dictwidget:
-			if _wid.prop!="":	
+			if _wid.prop!="" and (a in prop) == True:	#2022 added and (a in prop) == True, tabfrm doesnt include properties
 				value=str(prop[a])
 			else:
 				value=str(forms(self.dictwidget[a][0]).Text)
@@ -346,6 +347,7 @@ class PropertyEditor:
 		
 		#for a in label:
 		#	self.dictwidget.update({a:""})
+		print('yyy',label,values)
 		for a in zip(label,values):
 			
 			if a[0] in self.dictwidget:
@@ -745,7 +747,7 @@ def extractModuleProperties(module):
 			st=c.find(fnd)
 			if st!=-1:
 				c=c[st+len(fnd):]
-				#print(c)    
+				print(c)    
 				lst.append(c)
 	return lst;  
 class objectMove:
